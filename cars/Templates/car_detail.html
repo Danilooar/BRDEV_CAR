@@ -1,0 +1,327 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block title %}{{ carro.brand.name }} {{ carro.model }} | BRDEV{% endblock %}
+
+{% block head %}
+<style>
+  /* Estilos base */
+  :root {
+    --primary: #0f1626;
+    --secondary: #ff533d;
+    --accent: #00a6fb;
+    --light:rgb(0, 0, 0);
+    --dark: #1a1a1a;
+    --gray: #6c757d;
+  }
+  
+  .car-detail-container {
+    padding: 4rem 1rem;
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+  
+  .car-detail {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 3rem;
+    background: white;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+    position: relative;
+  }
+  
+  /* Badge de destaque */
+  .highlight-badge {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    background: var(--secondary);
+    color: white;
+    padding: 8px 15px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    font-weight: bold;
+    z-index: 10;
+    box-shadow: 0 4px 10px rgba(255, 83, 61, 0.3);
+  }
+  
+  /* Seção da imagem */
+  .car-detail-image {
+    height: 500px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+  }
+  
+  .car-detail-image::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to top, rgba(0,0,0,0.3), transparent 30%);
+  }
+  
+  /* Seção de informações */
+  .car-detail-info {
+    padding: 3rem 2rem;
+    position: relative;
+  }
+  
+  .car-detail-info h1 {
+    font-family: 'Orbitron', sans-serif;
+    color: var(--primary);
+    font-size: 2.5rem;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+  
+  .car-price {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--secondary);
+    margin: 1.5rem 0;
+  }
+  
+  /* Grid de especificações */
+  .specs-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+    margin: 2.5rem 0;
+  }
+  
+  .spec-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: var(--light);
+    padding: 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+  }
+  
+  .spec-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+  }
+  
+  .spec-item i {
+    color: var(--accent);
+    font-size: 1.3rem;
+    min-width: 25px;
+    text-align: center;
+  }
+  
+  .spec-item span {
+    font-size: 0.95rem;
+  }
+  
+  /* Botões */
+  .cta-button {
+    display: inline-block;
+    background: var(--primary);
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: all 0.3s ease;
+    border: 2px solid var(--primary);
+    text-align: center;
+    margin-top: 1rem;
+  }
+  
+  .cta-button:hover {
+    background: transparent;
+    color: var(--primary);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(15, 22, 38, 0.2);
+  }
+  
+  /* Galeria de fotos (opcional) */
+  .gallery-thumbnails {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+  }
+  
+  .thumbnail {
+    width: 60px;
+    height: 60px;
+    border-radius: 5px;
+    background-size: cover;
+    background-position: center;
+    cursor: pointer;
+    border: 2px solid transparent;
+    transition: all 0.3s ease;
+  }
+  
+  .thumbnail:hover {
+    border-color: var(--accent);
+    transform: scale(1.1);
+  }
+  
+  /* Responsividade */
+  @media (max-width: 992px) {
+    .car-detail {
+      grid-template-columns: 1fr;
+    }
+    
+    .car-detail-image {
+      height: 350px;
+    }
+    
+    .car-detail-info {
+      padding: 2rem;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .specs-grid {
+      grid-template-columns: 1fr;
+    }
+    
+    .car-detail-info h1 {
+      font-size: 2rem;
+    }
+    
+    .car-price {
+      font-size: 1.8rem;
+    }
+  }
+  
+  /* Efeitos extras */
+  .price-breakdown {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(0, 166, 251, 0.05);
+    border-radius: 10px;
+    border-left: 4px solid var(--accent);
+  }
+  
+  .price-breakdown h3 {
+    margin-top: 0;
+    color: var(--primary);
+  }
+  
+  .price-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid #eee;
+  }
+  
+  .price-item:last-child {
+    border-bottom: none;
+    font-weight: bold;
+    color: var(--secondary);
+  }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="car-detail-container">
+    <div class="car-detail">
+        {% if carro.destaque %}<div class="highlight-badge">DESTAQUE</div>{% endif %}
+        
+        {% if carro.photo %}
+        <div class="car-detail-image" style="background-image: url('{{ carro.photo.url }}')"></div>
+        {% else %}
+        <div class="car-detail-image" style="background-image: url('{% static 'images/default-car.jpg' %}')"></div>
+        {% endif %}
+        
+        <div class="car-detail-info">
+            <h1>{{ carro.brand.name }} {{ carro.model }}</h1>
+            <div class="car-price">R$ {{ carro.value|floatformat:2 }}</div>
+            
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <i class="fas fa-calendar-alt"></i>
+                    <span>Ano Fabricação: {{ carro.factory_year }}</span>
+                </div>
+                <div class="spec-item">
+                    <i class="fas fa-calendar-check"></i>
+                    <span>Ano Modelo: {{ carro.model_year }}</span>
+                </div>
+                <div class="spec-item">
+                    <i class="fas fa-tachometer-alt"></i>
+                    <span>Quilometragem: {{ carro.km }} km</span>
+                </div>
+                <div class="spec-item">
+                    <i class="fas fa-gas-pump"></i>
+                    <span>Combustível: {{ carro.get_fuel_display }}</span>
+                </div>
+                <div class="spec-item">
+                    <i class="fas fa-car"></i>
+                    <span>Placa: {{ carro.plate }}</span>
+                </div>
+                <div class="spec-item">
+                    <i class="fas fa-palette"></i>
+                    <span>Cor: {{ carro.color }}</span>
+                </div>
+            </div>
+            
+            <!-- Seção opcional de detalhes de preço -->
+            <div class="price-breakdown">
+                <h3>Detalhes do Preço</h3>
+                <div class="price-item">
+                    <span>Valor do veículo</span>
+                    <span>R$ {{ carro.value|floatformat:2 }}</span>
+                </div>
+                <div class="price-item">
+                    <span>Taxas administrativas</span>
+                    <span>R$ 1.200,00</span>
+                </div>
+                <div class="price-item">
+                    <span>Total</span>
+                    <span>R$ {{ carro.value|add:1200|floatformat:2 }}</span>
+                </div>
+            </div>
+            
+            <a href="{% url 'car_views' %}" class="cta-button">Voltar para lista</a>
+            <a href="https://api.whatsapp.com/send?phone=SEUNUMERO&text=Olá, estou interessado no {{ carro.brand.name }} {{ carro.model }}" 
+               class="cta-button" style="background: #25D366; border-color: #25D366; margin-left: 15px;">
+                <i class="fab fa-whatsapp"></i> WhatsApp
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  document.addEventListener('DOMContentLoaded', function() {
+    // Formatação de preços
+    const priceElements = document.querySelectorAll('.car-price, .price-item span:nth-child(2)');
+    
+    priceElements.forEach(element => {
+      if(element.textContent.includes('R$')) {
+        const price = element.textContent.replace('R$ ', '').replace('.', '').replace(',', '.');
+        const formattedPrice = parseFloat(price).toLocaleString('pt-BR', {
+          style: 'currency',
+          currency: 'BRL',
+          minimumFractionDigits: 2
+        });
+        element.textContent = formattedPrice;
+      }
+    });
+    
+    // Efeito de zoom na imagem ao passar o mouse
+    const carImage = document.querySelector('.car-detail-image');
+    if(carImage) {
+      carImage.addEventListener('mouseenter', () => {
+        carImage.style.transform = 'scale(1.03)';
+        carImage.style.transition = 'transform 0.5s ease';
+      });
+      
+      carImage.addEventListener('mouseleave', () => {
+        carImage.style.transform = 'scale(1)';
+      });
+    }
+  });
+</script>
+{% endblock %}

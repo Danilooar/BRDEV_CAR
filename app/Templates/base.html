@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% block title %}BRDEV | Concessionária Premium{% endblock %}</title>
+  <meta name="description" content="{% block description %}A mais exclusiva seleção de veículos premium com atendimento personalizado{% endblock %}">
+  
+  <!-- Favicon Dinâmico -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width='100' height='100' rx='20' fill='%230f172a'/><text x='50%' y='60%' font-size='60' text-anchor='middle' fill='%2300f0ff' font-family='monospace'>B</text></svg>">
+  
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Orbitron:wght@400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    /* Variáveis CSS Atualizadas */
+    :root {
+      --primary: #3b82f6;           /* Azul mais vibrante */
+      --primary-dark: #1e3a8a;      /* Azul naval */
+      --primary-light: #60a5fa;     /* Azul mais suave */
+      --accent: #00f0ff;            /* Azul neon */
+      --accent-dark: #00b4c8;       /* Azul neon mais escuro */
+      --text: #f8fafc;              /* Branco gelo */
+      --text-light: #cbd5e1;        /* Cinza claro */
+      --text-lighter: #94a3b8;      /* Cinza mais claro */
+      --bg: #0f172a;                /* Azul petróleo escuro */
+      --bg-dark: #020617;           /* Preto azulado */
+      --bg-darker: #010712;         /* Preto mais intenso */
+      --bg-light: #1e293b;          /* Azul petróleo */
+      --bg-lighter: #334155;        /* Azul petróleo claro */
+      --white: #ffffff;
+      --black: #000000;
+      --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+      --shadow-sm: 0 1px 10px rgba(0, 240, 255, 0.1);
+      --shadow: 0 4px 20px rgba(0, 240, 255, 0.15);
+      --shadow-md: 0 8px 30px rgba(0, 240, 255, 0.2);
+      --shadow-lg: 0 15px 40px rgba(0, 240, 255, 0.25);
+      --shadow-xl: 0 20px 50px rgba(0, 240, 255, 0.3);
+      --gradient: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+      --gradient-dark: linear-gradient(135deg, var(--primary-dark) 0%, var(--accent-dark) 100%);
+      --border-radius: 12px;
+      --border-radius-lg: 20px;
+    }
+    
+    /* Reset Moderno */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    body {
+      font-family: 'Montserrat', sans-serif;
+      line-height: 1.7;
+      color: var(--text);
+      background-color: var(--bg-dark);
+      display: flex;
+      flex-direction: column;
+      min-height: 100vh;
+      background-image: 
+        radial-gradient(circle at 10% 20%, rgba(59, 130, 246, 0.08) 0%, transparent 25%),
+        radial-gradient(circle at 90% 80%, rgba(0, 240, 255, 0.08) 0%, transparent 25%);
+      background-attachment: fixed;
+    }
+    
+    /* Efeito de partículas futurista */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-image: 
+        url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%2300f0ff' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
+      z-index: -1;
+      pointer-events: none;
+    }
+    
+    /* Layout Avançado */
+    .container {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 2rem;
+    }
+    
+    /* Header Futurista */
+    header {
+      background-color: rgba(2, 7, 18, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      padding: 1.5rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      border-bottom: 1px solid rgba(0, 240, 255, 0.1);
+      box-shadow: var(--shadow-sm);
+      transition: var(--transition);
+    }
+    
+    header.scrolled {
+      padding: 1rem 0;
+      background-color: rgba(2, 7, 18, 0.95);
+      box-shadow: var(--shadow);
+    }
+    
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    /* Logo Holográfico */
+    .logo {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      font-weight: 700;
+      color: transparent;
+      text-decoration: none;
+      letter-spacing: 1.5px;
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: var(--gradient);
+      -webkit-background-clip: text;
+      background-clip: text;
+      text-shadow: 0 0 10px rgba(0, 240, 255, 0.3);
+      transition: var(--transition);
+    }
+    
+    .logo:hover {
+      text-shadow: 0 0 20px rgba(0, 240, 255, 0.5);
+    }
+    
+    .logo::before {
+      content: '';
+      display: inline-block;
+      width: 14px;
+      height: 14px;
+      background: var(--gradient);
+      border-radius: 50%;
+      margin-right: 12px;
+      animation: pulse 2.5s infinite ease-in-out;
+      box-shadow: 0 0 10px var(--accent);
+    }
+    
+    .logo::after {
+      content: 'CONCESSIONÁRIA';
+      position: absolute;
+      bottom: -5px;
+      right: 0;
+      font-size: 0.6rem;
+      letter-spacing: 2px;
+      color: var(--accent);
+      opacity: 0.8;
+      font-weight: 400;
+    }
+    
+    /* Navegação Holográfica */
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+    }
+    
+    .nav-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: var(--transition);
+      position: relative;
+      padding: 0.5rem 0;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      font-family: 'Orbitron', sans-serif;
+    }
+    
+    .nav-links a::before {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--gradient);
+      transition: var(--transition);
+      box-shadow: 0 2px 5px var(--accent);
+    }
+    
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--white);
+      text-shadow: 0 0 8px rgba(0, 240, 255, 0.5);
+    }
+    
+    .nav-links a:hover::before,
+    .nav-links a.active::before {
+      width: 100%;
+    }
+    
+    /* Mobile Menu Button (opcional) */
+    .mobile-menu-btn {
+      display: none;
+      background: transparent;
+      border: none;
+      color: var(--text);
+      font-size: 1.5rem;
+      cursor: pointer;
+      z-index: 1001;
+    }
+    
+    /* Conteúdo Principal */
+    main {
+      flex: 1;
+      padding: 4rem 0;
+      position: relative;
+    }
+    
+    /* Footer Holográfico */
+    footer {
+      background-color: var(--bg-darker);
+      color: var(--text-light);
+      padding: 4rem 0 2.5rem;
+      margin-top: auto;
+      position: relative;
+      overflow: hidden;
+      border-top: 1px solid rgba(0, 240, 255, 0.1);
+    }
+    
+    footer::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 3px;
+      background: var(--gradient);
+      box-shadow: 0 0 20px var(--accent);
+    }
+    
+    .footer-content {
+      display: flex;
+      flex-direction: column;
+      gap: 3rem;
+    }
+    
+    .footer-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    
+    .footer-column h3 {
+      font-family: 'Orbitron', sans-serif;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      font-size: 1.2rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .footer-column h3::after {
+      content: '';
+      position: absolute;
+      bottom: -8px;
+      left: 0;
+      width: 40px;
+      height: 2px;
+      background: var(--gradient);
+    }
+    
+    .footer-links {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    
+    .footer-links a {
+      color: var(--text-light);
+      text-decoration: none;
+      transition: var(--transition);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    
+    .footer-links a:hover {
+      color: var(--accent);
+      transform: translateX(5px);
+    }
+    
+    .footer-links a i {
+      color: var(--accent);
+      width: 20px;
+      text-align: center;
+    }
+    
+    .social-links {
+      display: flex;
+      gap: 1.5rem;
+      margin-top: 1.5rem;
+    }
+    
+    .social-links a {
+      color: var(--text-light);
+      font-size: 1.3rem;
+      transition: var(--transition);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--bg-lighter);
+      background: rgba(30, 41, 59, 0.3);
+    }
+    
+    .social-links a:hover {
+      color: var(--white);
+      background: rgba(0, 240, 255, 0.1);
+      border-color: var(--accent);
+      transform: translateY(-5px);
+      box-shadow: 0 5px 20px rgba(0, 240, 255, 0.2);
+    }
+    
+    .copyright {
+      text-align: center;
+      color: var(--text-lighter);
+      font-size: 0.9rem;
+      padding-top: 2rem;
+      border-top: 1px solid rgba(0, 240, 255, 0.1);
+      margin-top: 2rem;
+    }
+    
+    /* Botão Voltar ao Topo Holográfico */
+    .back-to-top {
+      position: fixed;
+      bottom: 2.5rem;
+      right: 2.5rem;
+      width: 60px;
+      height: 60px;
+      background: var(--gradient);
+      color: var(--white);
+      border: none;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      box-shadow: var(--shadow-xl);
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+      z-index: 999;
+      font-size: 1.3rem;
+    }
+    
+    .back-to-top.visible {
+      opacity: 1;
+      visibility: visible;
+    }
+    
+    .back-to-top:hover {
+      transform: translateY(-5px) scale(1.1);
+      box-shadow: 0 0 30px rgba(0, 240, 255, 0.4);
+    }
+    
+    /* Efeitos e Animações */
+    @keyframes pulse {
+      0% { transform: scale(1); opacity: 1; box-shadow: 0 0 10px var(--accent); }
+      50% { transform: scale(1.2); opacity: 0.8; box-shadow: 0 0 20px var(--accent); }
+      100% { transform: scale(1); opacity: 1; box-shadow: 0 0 10px var(--accent); }
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    /* Responsividade Avançada */
+    @media (max-width: 1200px) {
+      .container {
+        padding: 0 1.5rem;
+      }
+      
+      .nav-links {
+        gap: 2rem;
+      }
+    }
+    
+    @media (max-width: 992px) {
+      .logo {
+        font-size: 1.8rem;
+      }
+      
+      .logo::after {
+        font-size: 0.5rem;
+      }
+      
+      .nav-links {
+        gap: 1.5rem;
+      }
+      
+      main {
+        padding: 3rem 0;
+      }
+    }
+    
+    @media (max-width: 768px) {
+      .mobile-menu-btn {
+        display: block;
+      }
+      
+      .nav-links {
+        position: fixed;
+        top: 0;
+        right: -100%;
+        width: 280px;
+        height: 100vh;
+        background: var(--bg-dark);
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 6rem 2rem 2rem;
+        box-shadow: -5px 0 30px rgba(0, 0, 0, 0.3);
+        transition: right 0.4s ease;
+        z-index: 1000;
+        border-left: 1px solid rgba(0, 240, 255, 0.1);
+      }
+      
+      .nav-links.active {
+        right: 0;
+      }
+      
+      .nav-links a {
+        padding: 0.8rem 0;
+        width: 100%;
+        border-bottom: 1px solid rgba(0, 240, 255, 0.05);
+      }
+      
+      .footer-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+    
+    @media (max-width: 576px) {
+      .container {
+        padding: 0 1.2rem;
+      }
+      
+      .logo {
+        font-size: 1.5rem;
+      }
+      
+      .logo::before {
+        width: 10px;
+        height: 10px;
+      }
+      
+      .back-to-top {
+        width: 50px;
+        height: 50px;
+        bottom: 1.5rem;
+        right: 1.5rem;
+      }
+    }
+  </style>
+  
+  {% block head %}{% endblock %}
+</head>
+<body>
+  <!-- Skip Link para Acessibilidade -->
+  <a href="#main-content" class="skip-link" style="position: absolute; top: -40px; left: 0; background: var(--gradient); color: white; padding: 10px; z-index: 1001; transition: top 0.3s;">
+    Pular para o conteúdo
+  </a>
+  
+  <!-- Header -->
+  <header id="header">
+    <div class="container header-content">
+      <a href="/" class="logo">BRDEV</a>
+      
+      <button class="mobile-menu-btn" aria-label="Menu" id="mobileMenuBtn">
+        <i class="fas fa-bars"></i>
+      </button>
+      
+      <nav class="nav-links" id="navLinks">
+        <a href="/" class="active"><i class="fas fa-home"></i> Home</a>
+        <a href="/carros"><i class="fas fa-car"></i> Veículos</a>
+        <a href="/servicos"><i class="fas fa-tools"></i> Serviços</a>
+        <a href="/sobre"><i class="fas fa-info-circle"></i> Sobre</a>
+        <a href="/contato"><i class="fas fa-envelope"></i> Contato</a>
+      </nav>
+    </div>
+  </header>
+  
+  <!-- Conteúdo Principal -->
+  <main id="main-content" class="container">
+    {% block content %}{% endblock %}
+  </main>
+  
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-content">
+      <div class="footer-grid">
+        <div class="footer-column">
+          <h3>BRDEV</h3>
+          <p>A mais exclusiva seleção de veículos premium com atendimento personalizado e tecnologia de ponta.</p>
+          <div class="social-links">
+            <a href="https://wa.me/SEUNUMERO" target="_blank" aria-label="WhatsApp"><i class="fab fa-whatsapp"></i></a>
+            <a href="https://instagram.com" target="_blank" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+            <a href="https://facebook.com" target="_blank" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+            <a href="https://youtube.com" target="_blank" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+          </div>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Links Rápidos</h3>
+          <div class="footer-links">
+            <a href="/"><i class="fas fa-chevron-right"></i> Home</a>
+            <a href="/carros"><i class="fas fa-chevron-right"></i> Veículos</a>
+            <a href="/servicos"><i class="fas fa-chevron-right"></i> Serviços</a>
+            <a href="/sobre"><i class="fas fa-chevron-right"></i> Sobre Nós</a>
+            <a href="/contato"><i class="fas fa-chevron-right"></i> Contato</a>
+          </div>
+        </div>
+        
+        <div class="footer-column">
+          <h3>Contato</h3>
+          <div class="footer-links">
+            <a href="tel:+5511999999999"><i class="fas fa-phone"></i> (11) 99999-9999</a>
+            <a href="mailto:contato@brdev.com"><i class="fas fa-envelope"></i> contato@brdev.com</a>
+            <a href="#"><i class="fas fa-map-marker-alt"></i> Av. Premium, 1000 - São Paulo</a>
+            <a href="#"><i class="fas fa-clock"></i> Seg-Sex: 9h às 18h</a>
+          </div>
+        </div>
+      </div>
+      
+      <p class="copyright">&copy; <span id="current-year"></span> BRDEV Concessionária Premium. Todos os direitos reservados.</p>
+    </div>
+  </footer>
+  
+  <!-- Botão Voltar ao Topo -->
+  <button class="back-to-top" aria-label="Voltar ao topo">
+    <i class="fas fa-arrow-up"></i>
+  </button>
+</body>
+</html>

@@ -39,7 +39,7 @@ Filtros por marca, modelo, preço e ano
 
 ---
 
-##📌 Status
+## 📌 Status
 
 🚧 Projeto em desenvolvimento
 

@@ -40,5 +40,7 @@ Filtros por marca, modelo, preço e ano
 ---
 
 ##📌 Status
+
 🚧 Projeto em desenvolvimento
+
 🔜 Próximo passo: autenticação de usuários e envio de mensagens

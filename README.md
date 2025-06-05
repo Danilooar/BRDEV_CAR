@@ -1,38 +1,44 @@
 # BRDEV_CAR
 
-🚗 BrDev Car
-Projeto desenvolvido com Django onde o admin cadastra carros premium para venda. O sistema é uma plataforma de compra e venda de veículos voltada para modelos de luxo.
 
-📌 Funcionalidades atuais
-Área administrativa (Django Admin)
+# 🚗 BrDev Car
 
-Cadastro de veículos premium
+**BrDev Car** é uma plataforma web desenvolvida com Django, onde o **admin** pode cadastrar carros premium para venda. O projeto está em evolução e permitirá que usuários também anunciem seus próprios veículos após se cadastrarem.
 
-Visualização dos carros disponíveis para venda
+---
 
-Página de detalhes do carro
+## ✨ Funcionalidades atuais
 
-Formulário de contato com o vendedor após visualizar os detalhes
+- Cadastro e listagem de carros de luxo
+- Página de detalhes do carro
+- Formulário para contato com o vendedor
+- Área administrativa (Django Admin)
 
-🛠 Tecnologias utilizadas
-Python 3.x
+---
 
-Django
+## 🛠 Tecnologias utilizadas
 
-SQLite
+- Python 3
+- Django
+- HTML/CSS
+- SQLite (banco de dados padrão)
 
-HTML/CSS
+---
 
-🔜 Próximos passos
-Sistema de cadastro e login para usuários
+## 📧 Contato com o vendedor
 
-Permitir que usuários anunciem seus próprios veículos
+Ao acessar a página de um carro, o visitante pode preencher um formulário para entrar em contato com o anunciante.
+---
 
-Upload de fotos nos anúncios
+## 🚧 Próximas funcionalidades
+Sistema de login e cadastro de usuários
 
-Filtros por marca, modelo, ano, faixa de preço
+Área para usuários anunciarem seus próprios carros
 
-Paginação dos resultados
+Filtros por marca, modelo, preço e ano
 
-🚧 Status do projeto
-Em desenvolvimento — últimas funcionalidades: exibição de detalhes do carro e envio de mensagem ao vendedor.
+---
+
+##📌 Status
+🚧 Projeto em desenvolvimento
+🔜 Próximo passo: autenticação de usuários e envio de mensagens

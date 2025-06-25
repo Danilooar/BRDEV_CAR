@@ -43,12 +43,11 @@ Filtros por marca, modelo, preço e ano
 
 🚧 Projeto em desenvolvimento
 
-🔜 Próximo passo: autenticação de usuários e envio de mensagens
 
 
 
 <p align="center">
-  <img src="demo/demo.gif" alt="Demonstração do Projeto" />
+  <img src="Demo/demo.gif" alt="Demonstração do Projeto" />
 </p>
 
 

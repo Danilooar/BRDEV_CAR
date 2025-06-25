@@ -44,3 +44,6 @@ Filtros por marca, modelo, preço e ano
 🚧 Projeto em desenvolvimento
 
 🔜 Próximo passo: autenticação de usuários e envio de mensagens
+
+![Demonstração do Projeto](Animação ofc.gif)
+

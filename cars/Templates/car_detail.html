@@ -5,54 +5,61 @@
 
 {% block head %}
 <style>
-  /* Estilos base */
   :root {
     --primary: #0f1626;
     --secondary: #ff533d;
     --accent: #00a6fb;
-    --light:rgb(0, 0, 0);
+    --light: rgb(38, 39, 44);
     --dark: #1a1a1a;
-    --gray: #6c757d;
+    --gray: rgb(5, 5, 5);
+    --whatsapp: #25D366;
   }
   
   .car-detail-container {
-    padding: 4rem 1rem;
+    padding: 2rem 1rem;
     max-width: 1200px;
     margin: 0 auto;
+    position: relative;
   }
   
   .car-detail {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 3rem;
-    background: white;
+    gap: 2rem;
+    background: rgba(10, 2, 83, 0.33);
     border-radius: 15px;
+    align-items: start;
     overflow: hidden;
     box-shadow: 0 10px 30px rgba(0,0,0,0.1);
     position: relative;
+    border: 1px solid rgba(255, 255, 255, 0.1);
   }
   
-  /* Badge de destaque */
   .highlight-badge {
     position: absolute;
     top: 20px;
     right: 20px;
-    background: var(--secondary);
+    background: linear-gradient(135deg, var(--secondary), #e53e3e);
     color: white;
     padding: 8px 15px;
     border-radius: 20px;
     font-size: 0.9rem;
     font-weight: bold;
     z-index: 10;
-    box-shadow: 0 4px 10px rgba(255, 83, 61, 0.3);
+    box-shadow: 0 4px 15px rgba(255, 83, 61, 0.4);
+    text-transform: uppercase;
   }
   
-  /* Seção da imagem */
   .car-detail-image {
     height: 500px;
     background-size: cover;
     background-position: center;
     position: relative;
+    transition: transform 0.5s ease;
+  }
+  
+  .car-detail-image:hover {
+    transform: scale(1.02);
   }
   
   .car-detail-image::after {
@@ -62,51 +69,54 @@
     left: 0;
     width: 100%;
     height: 100%;
-    background: linear-gradient(to top, rgba(0,0,0,0.3), transparent 30%);
+    background: linear-gradient(to top, rgba(0,0,0,0.5), transparent 40%);
   }
   
-  /* Seção de informações */
   .car-detail-info {
-    padding: 3rem 2rem;
+    padding: 2rem;
     position: relative;
+    display: flex;
+    flex-direction: column;
   }
-  
+
   .car-detail-info h1 {
     font-family: 'Orbitron', sans-serif;
-    color: var(--primary);
+    color: white;
     font-size: 2.5rem;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
     line-height: 1.2;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
   }
   
   .car-price {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: bold;
     color: var(--secondary);
     margin: 1.5rem 0;
+    letter-spacing: 1px;
   }
   
-  /* Grid de especificações */
   .specs-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin: 2.5rem 0;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin: 1.5rem 0;
   }
   
   .spec-item {
     display: flex;
     align-items: center;
     gap: 12px;
-    background: var(--light);
+    background: rgba(6, 7, 75, 0.9);
     padding: 15px;
     border-radius: 8px;
     transition: all 0.3s ease;
+    border-left: 3px solid var(--accent);
   }
   
   .spec-item:hover {
-    transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.2);
   }
   
   .spec-item i {
@@ -118,69 +128,151 @@
   
   .spec-item span {
     font-size: 0.95rem;
+    color: #f0f0f0;
+  }
+
+  .bio-item {
+    grid-column: 1 / -1;
+    background: rgba(0, 166, 251, 0.1) !important;
+    border-left: 3px solid var(--accent) !important;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .bio-item p {
+    margin: 8px 0 0 0;
+    color: #f0f0f0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+    width: 100%;
   }
   
-  /* Botões */
-  .cta-button {
-    display: inline-block;
-    background: var(--primary);
-    color: white;
-    padding: 15px 30px;
+  .price-details {
+    margin-top: 2rem;
+    padding: 1.5rem;
+    background: rgba(0, 166, 251, 0.1);
+    border-radius: 10px;
+    border-left: 4px solid var(--accent);
+  }
+  
+  .price-details h3 {
+    margin-top: 0;
+    color: var(--accent);
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .price-row {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+  }
+  
+  .price-row:last-child {
+    border-bottom: none;
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: var(--secondary);
+  }
+  
+  .action-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+  
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 12px 24px;
     border-radius: 50px;
-    text-decoration: none;
     font-weight: bold;
     transition: all 0.3s ease;
-    border: 2px solid var(--primary);
-    text-align: center;
-    margin-top: 1rem;
+    text-decoration: none;
+    border: 2px solid transparent;
   }
   
-  .cta-button:hover {
+  .btn-primary {
+    background: var(--primary);
+    color: white;
+  }
+  
+  .btn-primary:hover {
     background: transparent;
     color: var(--primary);
+    border-color: var(--primary);
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(15, 22, 38, 0.2);
   }
   
-  /* Galeria de fotos (opcional) */
-  .gallery-thumbnails {
+  .btn-whatsapp {
+    background: var(--whatsapp);
+    color: white;
+  }
+  
+  .btn-whatsapp:hover {
+    background: transparent;
+    color: var(--whatsapp);
+    border-color: var(--whatsapp);
+  }
+  
+  .floating-actions {
+    position: fixed;
+    top: 150px;
+    right: 30px;
     display: flex;
-    gap: 10px;
-    margin-top: 20px;
+    flex-direction: column;
+    gap: 1rem;
+    z-index: 100;
   }
   
-  .thumbnail {
-    width: 60px;
-    height: 60px;
-    border-radius: 5px;
-    background-size: cover;
-    background-position: center;
-    cursor: pointer;
-    border: 2px solid transparent;
+  .action-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    color: white;
+    font-size: 1.2rem;
     transition: all 0.3s ease;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
   }
   
-  .thumbnail:hover {
-    border-color: var(--accent);
-    transform: scale(1.1);
+  .edit-btn {
+    background: rgba(0, 166, 251, 0.9);
   }
   
-  /* Responsividade */
+  .delete-btn {
+    background: rgba(220, 53, 69, 0.9);
+  }
+  
+  .action-btn:hover {
+    transform: translateY(-3px) scale(1.1);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+  }
+  
   @media (max-width: 992px) {
     .car-detail {
       grid-template-columns: 1fr;
     }
     
     .car-detail-image {
-      height: 350px;
+      height: 400px;
     }
     
-    .car-detail-info {
-      padding: 2rem;
+    .floating-actions {
+      top: auto;
+      bottom: 20px;
+      right: 20px;
+      flex-direction: row;
     }
   }
   
-  @media (max-width: 576px) {
+  @media (max-width: 768px) {
     .specs-grid {
       grid-template-columns: 1fr;
     }
@@ -192,33 +284,10 @@
     .car-price {
       font-size: 1.8rem;
     }
-  }
-  
-  /* Efeitos extras */
-  .price-breakdown {
-    margin-top: 2rem;
-    padding: 1.5rem;
-    background: rgba(0, 166, 251, 0.05);
-    border-radius: 10px;
-    border-left: 4px solid var(--accent);
-  }
-  
-  .price-breakdown h3 {
-    margin-top: 0;
-    color: var(--primary);
-  }
-  
-  .price-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid #eee;
-  }
-  
-  .price-item:last-child {
-    border-bottom: none;
-    font-weight: bold;
-    color: var(--secondary);
+    
+    .action-buttons {
+      flex-direction: column;
+    }
   }
 </style>
 {% endblock %}
@@ -227,6 +296,17 @@
 <div class="car-detail-container">
     <div class="car-detail">
         {% if carro.destaque %}<div class="highlight-badge">DESTAQUE</div>{% endif %}
+        
+        {% if user.is_authenticated %}
+        <div class="floating-actions">
+            <a href="{% url 'car_update' carro.id %}" class="action-btn edit-btn" title="Editar">
+                <i class="fas fa-edit"></i>
+            </a>
+            <a href="{% url 'car_delete' carro.id %}" class="action-btn delete-btn" title="Deletar">
+                <i class="fas fa-trash-alt"></i>
+            </a>
+        </div>
+        {% endif %}
         
         {% if carro.photo %}
         <div class="car-detail-image" style="background-image: url('{{ carro.photo.url }}')"></div>
@@ -241,52 +321,60 @@
             <div class="specs-grid">
                 <div class="spec-item">
                     <i class="fas fa-calendar-alt"></i>
-                    <span>Ano Fabricação: {{ carro.factory_year }}</span>
-                </div>
-                <div class="spec-item">
-                    <i class="fas fa-calendar-check"></i>
-                    <span>Ano Modelo: {{ carro.model_year }}</span>
+                    <span>Ano: {{ carro.factory_year }}/{{ carro.model_year }}</span>
                 </div>
                 <div class="spec-item">
                     <i class="fas fa-tachometer-alt"></i>
-                    <span>Quilometragem: {{ carro.km }} km</span>
+                    <span>{{ carro.km|floatformat:0 }} km</span>
                 </div>
                 <div class="spec-item">
                     <i class="fas fa-gas-pump"></i>
-                    <span>Combustível: {{ carro.get_fuel_display }}</span>
+                    <span>{{ carro.get_fuel_display }}</span>
                 </div>
                 <div class="spec-item">
                     <i class="fas fa-car"></i>
-                    <span>Placa: {{ carro.plate }}</span>
+                    <span>{{ carro.plate }}</span>
                 </div>
                 <div class="spec-item">
                     <i class="fas fa-palette"></i>
-                    <span>Cor: {{ carro.color }}</span>
+                    <span>{{ carro.color }}</span>
                 </div>
+          {% if carro.bio %}
+<div class="spec-item bio-item" style="margin-top: 2rem;">
+    <div style="display: flex; align-items: center; gap: 12px; width: 100%;">
+        <i class="fas fa-robot"></i>
+        <strong>Descrição IA:</strong>
+    </div>
+    <p style="margin-top: 12px; white-space: pre-line;">{{ carro.bio }}</p>
+</div>
+{% endif %}
             </div>
             
-            <!-- Seção opcional de detalhes de preço -->
-            <div class="price-breakdown">
+            <div class="price-details">
                 <h3>Detalhes do Preço</h3>
-                <div class="price-item">
+                <div class="price-row">
                     <span>Valor do veículo</span>
                     <span>R$ {{ carro.value|floatformat:2 }}</span>
                 </div>
-                <div class="price-item">
+                <div class="price-row">
                     <span>Taxas administrativas</span>
                     <span>R$ 1.200,00</span>
                 </div>
-                <div class="price-item">
+                <div class="price-row">
                     <span>Total</span>
                     <span>R$ {{ carro.value|add:1200|floatformat:2 }}</span>
                 </div>
             </div>
             
-            <a href="{% url 'car_views' %}" class="cta-button">Voltar para lista</a>
-            <a href="https://api.whatsapp.com/send?phone=SEUNUMERO&text=Olá, estou interessado no {{ carro.brand.name }} {{ carro.model }}" 
-               class="cta-button" style="background: #25D366; border-color: #25D366; margin-left: 15px;">
-                <i class="fab fa-whatsapp"></i> WhatsApp
-            </a>
+            <div class="action-buttons">
+                <a href="{% url 'car_views' %}" class="btn btn-primary">
+                    <i class="fas fa-arrow-left"></i> Voltar
+                </a>
+                <a href="https://api.whatsapp.com/send?phone=SEUNUMERO&text=Olá, estou interessado no {{ carro.brand.name }} {{ carro.model }}" 
+                   class="btn btn-whatsapp">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </a>
+            </div>
         </div>
     </div>
 </div>
@@ -295,32 +383,26 @@
 {% block scripts %}
 <script>
   document.addEventListener('DOMContentLoaded', function() {
-    // Formatação de preços
-    const priceElements = document.querySelectorAll('.car-price, .price-item span:nth-child(2)');
+    // Formatação automática de preços
+    const formatCurrency = (value) => {
+      return parseFloat(value.toString().replace('R$ ', '').replace(/\./g, '').replace(',', '.'))
+        .toLocaleString('pt-BR', {style: 'currency', currency: 'BRL'});
+    };
     
-    priceElements.forEach(element => {
-      if(element.textContent.includes('R$')) {
-        const price = element.textContent.replace('R$ ', '').replace('.', '').replace(',', '.');
-        const formattedPrice = parseFloat(price).toLocaleString('pt-BR', {
-          style: 'currency',
-          currency: 'BRL',
-          minimumFractionDigits: 2
-        });
-        element.textContent = formattedPrice;
+    document.querySelectorAll('.car-price, .price-row span:nth-child(2)').forEach(el => {
+      if(el.textContent.includes('R$')) {
+        el.textContent = formatCurrency(el.textContent);
       }
     });
     
-    // Efeito de zoom na imagem ao passar o mouse
-    const carImage = document.querySelector('.car-detail-image');
-    if(carImage) {
-      carImage.addEventListener('mouseenter', () => {
-        carImage.style.transform = 'scale(1.03)';
-        carImage.style.transition = 'transform 0.5s ease';
-      });
-      
-      carImage.addEventListener('mouseleave', () => {
-        carImage.style.transform = 'scale(1)';
-      });
+    // Formatação de quilometragem
+    const kmElement = document.querySelector('.spec-item:nth-child(2) span');
+    if(kmElement) {
+      const kmText = kmElement.textContent;
+      const kmValue = kmText.match(/\d+/)[0];
+      if(kmValue) {
+        kmElement.textContent = kmText.replace(kmValue, parseInt(kmValue).toLocaleString('pt-BR'));
+      }
     }
   });
 </script>

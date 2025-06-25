@@ -686,7 +686,6 @@
               <div class="car-details">
                 <span><i class="fas fa-tachometer-alt"></i> {{ carro.km }} km</span>
                 <span><i class="fas fa-gas-pump"></i> {{ carro.get_fuel_display }}</span>
-                <span><i class="fas fa-car"></i> {{ carro.plate }}</span>
               </div>
 
               <a href="{% url 'car_detail' carro.id %}" class="cta-button">Ver Detalhes <i class="fas fa-arrow-right"></i></a>

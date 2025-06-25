@@ -1,56 +1,79 @@
-from django.core.paginator import Paginator
-from django.shortcuts import render, get_object_or_404,redirect
-from .models import Car,Brand
-from cars.forms import CarForm
+from django.views.generic import ListView, CreateView, DetailView, UpdateView,DeleteView
+from django.urls import reverse_lazy
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
+from .models import Car, Brand
+from .forms import CarModelForm
+from django.db.models import Q
 
 
 
-def new_car_view(request):
-  if request.method == "POST":
-    new_car_form = CarForm(request.POST, request.FILES) 
-    if new_car_form.is_valid():
-      new_car_form.save()
-      return redirect('car_list')
-   
-  else:
-    new_car_form = CarForm()
-    return render(request, "new_car.html", {"new_car_form": new_car_form})
+@method_decorator(login_required(login_url='login'), name='dispatch')
+class CarDeleteView(DeleteView): # type: ignore
+    model = Car 
+    template_name = 'car_delete.html'
+    success_url = reverse_lazy('car_views')
     
-    
-def car_detail(request, id):
-    carro = get_object_or_404(Car, id=id)
-    return render(request, 'car_detail.html', {'carro': carro})
+@method_decorator(login_required(login_url='login'), name='dispatch')
+class CarUpdateView(UpdateView):
+    model = Car
+    form_class = CarModelForm
+    template_name = 'car_update.html'
+    success_url = reverse_lazy('car_views')
 
-def car_views(request):
-    query = request.GET.get("q")
-    marca_id = request.GET.get("marca")
-    preco = request.GET.get("preco")
+    def get_success_url(self):
+        return reverse_lazy('car_detail', kwargs={'pk': self.object.pk})
 
-    carros = Car.objects.all()
+class CarsView(ListView):
+    model = Car
+    template_name = "cars.html"
+    context_object_name = "carros"
+    paginate_by = 6
 
-    if query:
-        carros = carros.filter(modelo__icontains=query)
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        query = self.request.GET.get("q")
+        marca_id = self.request.GET.get("marca")
+        preco = self.request.GET.get("preco")
 
-    if marca_id:
-        carros = carros.filter(marca_id=marca_id)
+        if query:
+            queryset = queryset.filter(modelo__icontains=query)
 
-    if preco:
-        if preco == "50000":
-            carros = carros.filter(preco__lte=50000)
-        elif preco == "100000":
-            carros = carros.filter(preco__gt=50000, preco__lte=100000)
-        elif preco == "150000":
-            carros = carros.filter(preco__gt=100000, preco__lte=150000)
-        elif preco == "150001":
-            carros = carros.filter(preco__gt=150000)
+        if marca_id:
+            queryset = queryset.filter(marca_id=marca_id)
 
-    paginator = Paginator(carros, 6)  # 6 carros por página
-    page_number = request.GET.get("page")
-    page_obj = paginator.get_page(page_number)
+        if preco:
+            if preco == "50000":
+                queryset = queryset.filter(preco__lte=50000)
+            elif preco == "100000":
+                queryset = queryset.filter(Q(preco__gt=50000) & Q(preco__lte=100000))
+            elif preco == "150000":
+                queryset = queryset.filter(Q(preco__gt=100000) & Q(preco__lte=150000))
+            elif preco == "150001":
+                queryset = queryset.filter(preco__gt=150000)
 
-    context = {
-        "carros": page_obj,
-        "marcas": Brand.objects.all()
-    }
+        return queryset
 
-    return render(request, "cars.html", context)
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["marcas"] = Brand.objects.all()
+        return context
+
+
+
+@method_decorator(login_required(login_url='login'), name='dispatch')
+class NewCarCreateView(CreateView):
+        model = Car
+        form_class = CarModelForm
+        template_name = 'newcar.html'
+        success_url =  reverse_lazy('car_views')
+
+
+
+
+class CarDetailView(DetailView):
+    model = Car
+    template_name = "car_detail.html"
+    context_object_name = "carro"
+
+

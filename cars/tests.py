@@ -1,3 +1,1 @@
-from django.test import TestCase # type: ignore
-
-
+from django.test import TestCase  # type: ignore

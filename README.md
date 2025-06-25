@@ -45,5 +45,11 @@ Filtros por marca, modelo, preço e ano
 
 🔜 Próximo passo: autenticação de usuários e envio de mensagens
 
-![Demonstração do Projeto](Animação ofc.gif)
+
+![Demonstração do Projeto](demo.gif)
+
+<p align="center">
+  <img src="demo.gif" alt="Demonstração do Projeto" />
+</p>
+
 

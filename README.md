@@ -53,5 +53,5 @@ Filtros por marca, modelo, preço e ano
 
 
 =======
-![Demonstração do Projeto](Animação ofc.gif)
->>>>>>> 146853f (New version 2.0)
+
+

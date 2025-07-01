@@ -44,7 +44,6 @@ Filtros por marca, modelo, preço e ano
 🚧 Projeto em desenvolvimento
 
 
-<<<<<<< HEAD
 
 
 <p align="center">
@@ -52,6 +51,6 @@ Filtros por marca, modelo, preço e ano
 </p>
 
 
-=======
+
 
 
